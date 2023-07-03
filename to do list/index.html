@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>To-Do List</h1>
+        </div>
+        <div class="task">
+            <form>
+                <input type="text" id="addtask" placeholder="Enter task to add">
+                <button type="button" onclick="add()">ADD</button>
+            </form>
+
+            <ul id="list"></ul>
+        </div>
+    </div>
+    
+    <script>
+        function add(){
+            let addtask = document.getElementById('addtask');
+            var list = document.getElementById('list');
+
+            if(addtask.value.trim() === ""){
+                alert("Please enter a task");
+                return;
+            }
+
+            var listData = document.createElement('li');
+            listData.textContent = addtask.value;
+
+            // deleteBtn
+            var deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '<i class="fas fa-trash" id="ab"></i>'; 
+            deleteBtn.setAttribute('onclick', 'deleteTask(this)');
+
+            // editBtn 
+            var editBtn = document.createElement('button');
+            editBtn.innerHTML = '<i class="fas fa-edit"></i>'; 
+            editBtn.setAttribute('onclick', 'editTask(this)');
+
+            list.appendChild(listData);
+            listData.appendChild(deleteBtn);
+            listData.appendChild(editBtn); 
+
+            addtask.value = "";
+        }
+
+        function deleteTask(button) {
+            const listItem = button.parentNode;
+            const list = listItem.parentNode;
+            list.removeChild(listItem);
+        }
+
+        function editTask(button) {
+            const listItem = button.parentNode;
+            const taskText = listItem.firstChild.textContent;
+            const editnew = prompt("Edit the task:", taskText);
+            if (editnew !== null) {
+                listItem.firstChild.textContent = editnew;
+            }
+        }
+    </script>
+</body>
+</html>
